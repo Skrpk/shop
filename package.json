@@ -30,13 +30,16 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.15.5",
+    "jsonwebtoken": "^8.0.1",
+    "lodash": "^4.17.4",
     "mongoose": "^4.11.13",
     "prop-types": "^15.6.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-redux": "^5.0.6",
     "react-router": "2.5.0",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "validator": "^9.0.0"
   },
   "eslintConfig": {
     "env": {
@@ -87,10 +90,6 @@
       "class-methods-use-this": 0,
       "import/imports-first": 0,
       "arrow-body-style": 0,
-      "linebreak-style": [
-        "error",
-        "windows"
-      ],
       "object-curly-spacing": "off",
       "one-var": "off",
       "one-var-declaration-per-line": "off",

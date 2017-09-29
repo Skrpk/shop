@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 
 import config from './config';
 import webpackConfig from '../webpack.config.dev.js';
+import authRoute from './routes/auth';
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.use(webpackHotMiddleware(compiler));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './index.html'));
 });
+
+app.use('/api', authRoute);
 
 app.listen(config.port, (err) => {
   if (err) {
