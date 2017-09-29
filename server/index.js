@@ -3,6 +3,7 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import config from './config';
@@ -14,11 +15,13 @@ const compiler = webpack(webpackConfig);
 
 mongoose.connect(config.db, {
   useMongoClient: true,
-}).then((data) => {
-  console.log(data);
-}).catch(() => {
-  console.log('2222222');
+}).then(() => {
+  console.log('Connected to mongoDB');
+}).catch((err) => {
+  throw err;
 });
+
+app.use(bodyParser.json());
 
 app.use(webpackMiddleware(compiler, {
   hot: true,
