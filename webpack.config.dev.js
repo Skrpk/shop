@@ -20,11 +20,15 @@ export default {
       {
         test: /\.js$/,
         include: path.join(__dirname, 'client'),
-        loaders: [ 'react-hot-loader/webpack', 'babel-loader' ]
+        loaders: ['react-hot-loader/webpack', 'babel-loader']
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       }
     ]
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.css']
   }
-}
+};

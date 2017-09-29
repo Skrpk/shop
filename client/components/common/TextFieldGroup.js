@@ -17,7 +17,7 @@ const TextFieldGroup = ({ field, value, label, error, type, onChange, checkUserE
       {error && <span className="help-block">{error}</span>}
     </div>
   );
-}
+};
 
 TextFieldGroup.propTypes = {
   field: PropTypes.string.isRequired,

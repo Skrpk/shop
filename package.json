@@ -31,6 +31,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "classnames": "^2.2.5",
+    "css-loader": "^0.28.7",
     "express": "^4.15.5",
     "jsonwebtoken": "^8.0.1",
     "lodash": "^4.17.4",
@@ -43,6 +44,7 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
+    "style-loader": "^0.18.2",
     "validator": "^9.0.0"
   },
   "eslintConfig": {
@@ -86,6 +88,7 @@
       "import/no-extraneous-dependencies": 0,
       "import/no-unresolved": 0,
       "react/prefer-stateless-function": 0,
+      "linebreak-style": 0,
       "import/extensions": 0,
       "no-unused-vars": 1,
       "max-len": [
