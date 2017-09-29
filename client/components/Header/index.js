@@ -11,14 +11,14 @@ const Header = () => {
 
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav navbar-right">
-              <Link to="/signup">Sign Up</Link>
-              <Link to="/login">Login</Link>
+              <li><Link to="/signup">Sign Up</Link></li>
+              <li><Link to="/login">Login</Link></li>
             </ul>
           </div>
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Header;
