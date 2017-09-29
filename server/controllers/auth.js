@@ -8,6 +8,7 @@ const signUp = async (req, res, next) => {
   const credentials = req.body;
   let user;
 
+  console.log('Request is here');
   const { errors, isValid } = ValidateSignUpInput(credentials);
 
   if (!isValid) {
