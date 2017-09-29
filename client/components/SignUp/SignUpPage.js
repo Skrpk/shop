@@ -28,12 +28,4 @@ SignUpPage.propTypes = {
   isUserExists: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = store => ({
-
-});
-
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);
+export default SignUpPage;

@@ -20,6 +20,10 @@ class SignUpForm extends React.PureComponent {
     console.log('checkUserExists');
   }
 
+  onSubmit = () => {
+    this.props.userSignUpRequest(this.state);
+  }
+
   render() {
     const { errors } = this.state;
 
@@ -37,7 +41,7 @@ class SignUpForm extends React.PureComponent {
           />
           <TextFieldGroup
             error={errors.email}
-            label="Username"
+            label="Email"
             onChange={this.onChange}
             checkUserExists={this.checkUserExists}
             value={this.state.email}
@@ -45,21 +49,25 @@ class SignUpForm extends React.PureComponent {
           />
           <TextFieldGroup
             error={errors.password}
-            label="Username"
+            label="Password"
             onChange={this.onChange}
             value={this.state.password}
             field="password"
           />
           <TextFieldGroup
             error={errors.passwordConfirmation}
-            label="Username"
+            label="Password Confirmation"
             onChange={this.onChange}
             value={this.state.passwordConfirmation}
             field="passwordConfirmation"
           />
 
           <div className="form-group">
-            <button disabled={this.state.isLoading} className="btn btn-primary btn-lg">
+            <button
+              onClick={this.onSubmit}
+              disabled={this.state.isLoading}
+              className="btn btn-primary btn-lg"
+            >
               Sign up
             </button>
           </div>
