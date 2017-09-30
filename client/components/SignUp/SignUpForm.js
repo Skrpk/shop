@@ -20,7 +20,8 @@ class SignUpForm extends React.PureComponent {
     console.log('checkUserExists');
   }
 
-  onSubmit = () => {
+  onSubmit = (e) => {
+    e.preventDefault();
     this.props.userSignUpRequest(this.state);
   }
 

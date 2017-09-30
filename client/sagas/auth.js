@@ -1,14 +1,23 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { take, call, put } from 'redux-saga/effects';
 
 import api from '../api/auth';
 import constants from '../constants/authConstants';
 
-function* signUpRequest(action) {
-  console.log('Saga calls here!')
-  const user = yield call(api.signUp, action.payload);
-  console.log(user);
+function* signUpRequest(data) {
+  try {
+    const receivedData = yield call(api.signUp, data);
+  } catch (e) {
+    console.log(e.response.data);
+    yield put({
+      type: constants.SIGN_UP_ERROR,
+      payload: e.response.data,
+    });
+  }
 }
 
 export default function* signUpSaga() {
-  yield takeEvery(constants.SIGN_UP_REQUEST, signUpRequest);
+  while (true) {
+    const { payload } = yield take(constants.SIGN_UP_REQUEST);
+    yield call(signUpRequest, payload);
+  }
 }

@@ -6,15 +6,19 @@ import constants from '../constants/authConstants';
 const initialState = Map({
   isAuthenticated: false,
   user: {},
+  errors: {},
 });
 
 export default(state = initialState, action = {}) => {
   switch (action.type) {
-    ////////////////////////////// probably SIGN_UP_REQUEST is incorrect constant
-    case constants.SIGN_UP_REQUEST: {
+    case constants.SET_SIGNED_UP_USER: {
       return state
         .set('user', action.payload)
-        .set('isAuthenticated', !isEmpty(action.payload));
+        .set('isAuthenticated', true);
+    }
+    case constants.SIGN_UP_ERROR: {
+      return state
+        .set('erorrs', action.payload);
     }
     default:
       return state;
