@@ -12,19 +12,21 @@ const signUp = async (req, res, next) => {
   const { errors, isValid } = ValidateSignUpInput(credentials);
 
   if (!isValid) {
+    console.log('res.status(400).json(errors);');
     res.status(400).json(errors);
-  }
+  } else {
+    console.log('try');
+    try {
+      user = await User.create(credentials);
+    } catch ({ message }) {
+      return next({
+        status: 400,
+        message,
+      });
+    }
 
-  try {
-    user = await User.create(credentials);
-  } catch ({ message }) {
-    return next({
-      status: 400,
-      message,
-    });
+    res.json(user);
   }
-
-  res.json(user);
 };
 
 export default {
