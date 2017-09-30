@@ -28,7 +28,6 @@ const ValidateSignUpInput = (data) => {
     errors.passwordConfirmation = 'Passwords must match';
   }
 
-  console.log(isEmpty(errors));
   return {
     errors,
     isValid: isEmpty(errors),

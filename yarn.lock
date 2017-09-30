@@ -4147,9 +4147,9 @@ react-redux@^5.0.6:
     loose-envify "^1.1.0"
     prop-types "^15.5.10"
 
-react-router@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-2.5.0.tgz#e1c97af161e8f92a98c888e38ea758c7f2a8cc3f"
+react-router@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-2.5.2.tgz#1c1fc95366393c96c1fb4932c0506128196b1203"
   dependencies:
     history "^2.0.1"
     hoist-non-react-statics "^1.0.5"

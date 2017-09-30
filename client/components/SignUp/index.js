@@ -4,7 +4,7 @@ import SignUpPage from './SignUpPage';
 import authActions from '../../actions/authActions';
 
 const mapStateToProps = store => ({
-
+  errors: store.auth.get('errors'),
 });
 
 const mapDispatchToProps = dispatch => ({

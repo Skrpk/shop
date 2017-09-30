@@ -18,7 +18,7 @@ export default(state = initialState, action = {}) => {
     }
     case constants.SIGN_UP_ERROR: {
       return state
-        .set('erorrs', action.payload);
+        .set('errors', action.payload);
     }
     default:
       return state;

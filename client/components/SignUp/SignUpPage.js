@@ -10,6 +10,7 @@ class SignUpPage extends React.PureComponent {
     const {
       userSignUpRequest,
       isUserExists,
+      errors,
     } = this.props;
 
     return (<div className="row">
@@ -17,6 +18,7 @@ class SignUpPage extends React.PureComponent {
         <SignUpForm
           isUserExists={isUserExists}
           userSignUpRequest={userSignUpRequest}
+          errors={errors}
         />
       </div>
     </div>);
@@ -26,6 +28,7 @@ class SignUpPage extends React.PureComponent {
 SignUpPage.propTypes = {
   userSignUpRequest: PropTypes.func.isRequired,
   isUserExists: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 export default SignUpPage;

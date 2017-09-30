@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import TextFieldGroup from '../common/TextFieldGroup';
 
@@ -18,6 +19,10 @@ class SignUpForm extends React.PureComponent {
 
   checkUserExists = (e) => {
     console.log('checkUserExists');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ errors: nextProps.errors });
   }
 
   onSubmit = (e) => {
@@ -76,6 +81,10 @@ class SignUpForm extends React.PureComponent {
       </div>
     );
   }
+}
+
+SignUpForm.propTypes = {
+  errors: PropTypes.object.isRequired,
 }
 
 export default SignUpForm;
