@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import validateInput from '../../../server/shared/validations/signUp';
 import TextFieldGroup from '../common/TextFieldGroup';
 
 class SignUpForm extends React.PureComponent {
@@ -13,11 +14,11 @@ class SignUpForm extends React.PureComponent {
     isLoading: false,
   }
 
-  onChange = () => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  checkUserExists = (e) => {
+  checkUserExists = () => {
     console.log('checkUserExists');
   }
 
@@ -25,9 +26,21 @@ class SignUpForm extends React.PureComponent {
     this.setState({ errors: nextProps.errors });
   }
 
+  isValid = () => {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.userSignUpRequest(this.state);
+    if (this.isValid()) {
+      this.props.userSignUpRequest(this.state);
+    }
   }
 
   render() {
