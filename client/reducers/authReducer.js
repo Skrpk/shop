@@ -14,6 +14,7 @@ export default(state = initialState, action = {}) => {
     case constants.SET_SIGNED_UP_USER: {
       return state
         .set('user', action.payload)
+        .set('errors', {})
         .set('isAuthenticated', true);
     }
     case constants.SIGN_UP_ERROR: {

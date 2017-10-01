@@ -5,6 +5,11 @@ const signUpRequest = data => ({
   payload: data,
 });
 
+const isUserExists = data => ({
+  type: constants.IS_USER_EXISTS,
+  payload: data,
+});
+
 export default {
   signUpRequest,
 };

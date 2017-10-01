@@ -9,6 +9,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => ({
   userSignUpRequest: data => dispatch(authActions.signUpRequest(data)),
+  isUserExists: data => dispatch(authActions.isUserExists(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

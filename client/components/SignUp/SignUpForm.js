@@ -19,7 +19,12 @@ class SignUpForm extends React.PureComponent {
   }
 
   checkUserExists = () => {
-    console.log('checkUserExists');
+    const field = e.target.name;
+    const val = e.target.value;
+
+    if (!val) {
+      this.props.checkUserExists(field, val);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,6 +105,8 @@ class SignUpForm extends React.PureComponent {
 
 SignUpForm.propTypes = {
   errors: PropTypes.object.isRequired,
+  checkUserExists: PropTypes.func.isRequired,
+  userSignUpRequest: PropTypes.func.isRequired,
 }
 
 export default SignUpForm;

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 import User from '../models/user';
 import config from '../config';
@@ -11,10 +12,11 @@ const signUp = async (req, res, next) => {
   const { errors, isValid } = ValidateSignUpInput(credentials);
 
   if (!isValid) {
-    console.log(errors);
     res.status(400).json(errors);
   } else {
     try {
+      const passwordDigest = bcrypt.hashSync(credentials.password, 10);
+      credentials.password = passwordDigest;
       user = await User.create(credentials);
     } catch ({ message }) {
       return next({

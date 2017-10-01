@@ -16,7 +16,7 @@ class SignUpPage extends React.PureComponent {
     return (<div className="row">
       <div className={'form-wrapper'}>
         <SignUpForm
-          isUserExists={isUserExists}
+          checkUserExists={isUserExists}
           userSignUpRequest={userSignUpRequest}
           errors={errors}
         />

@@ -6,8 +6,12 @@ import constants from '../constants/authConstants';
 function* signUpRequest(data) {
   try {
     const receivedData = yield call(api.signUp, data);
+    
+    yield put({
+      type: constants.SET_SIGNED_UP_USER,
+      payload: receivedData,
+    });
   } catch (e) {
-    console.log(e.response.data);
     yield put({
       type: constants.SIGN_UP_ERROR,
       payload: e.response.data,
