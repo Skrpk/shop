@@ -3,13 +3,17 @@ import User from '../models/user';
 
 async function checkUserExists(req, res, next) {
   User.find({
-    [req.params.identifier]: req.params.value,
+    [req.body.field]: req.body.val,
   })
     .then((data) => {
-      console.log(`EXISTS ${data}`);
+      if (data.length) {
+        console.log('EXISTS');
+      } else {
+        console.log('NOT EXISTS');
+      }
     })
-    .catch((data) => {
-      console.log(`NOT EXISTS ${data}`);
+    .catch((error) => {
+      throw error;
     });
 }
 
@@ -29,4 +33,7 @@ async function getCurrentUser(req, res, next) {
   return res.json(user);
 }
 
-export default getCurrentUser;
+export default {
+  checkUserExists,
+  getCurrentUser,
+};

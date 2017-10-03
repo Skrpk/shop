@@ -12,4 +12,5 @@ const isUserExists = data => ({
 
 export default {
   signUpRequest,
+  isUserExists,
 };

@@ -1,5 +1,13 @@
-import signUpSaga from './auth';
+import { all, fork } from 'redux-saga/effects';
+
+import {
+  signUpSaga,
+  checkUserExistsSaga,
+} from './auth';
 
 export default function* rootSaga() {
-  yield signUpSaga();
+  yield all([
+    fork(signUpSaga),
+    fork(checkUserExistsSaga),
+  ]);
 }

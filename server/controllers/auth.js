@@ -19,6 +19,7 @@ const signUp = async (req, res, next) => {
       credentials.password = passwordDigest;
       user = await User.create(credentials);
     } catch ({ message }) {
+      console.log(message);
       return next({
         status: 400,
         message,

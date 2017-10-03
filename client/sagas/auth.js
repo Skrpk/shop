@@ -1,12 +1,13 @@
-import { take, call, put } from 'redux-saga/effects';
+import { take, call, put, takeEvery } from 'redux-saga/effects';
 
 import api from '../api/auth';
+import userApi from '../api/user';
 import constants from '../constants/authConstants';
 
-function* signUpRequest(data) {
+function* signUpRequest({ payload }) {
   try {
-    const receivedData = yield call(api.signUp, data);
-    
+    const receivedData = yield call(api.signUp, payload);
+
     yield put({
       type: constants.SET_SIGNED_UP_USER,
       payload: receivedData,
@@ -19,9 +20,14 @@ function* signUpRequest(data) {
   }
 }
 
-export default function* signUpSaga() {
-  while (true) {
-    const { payload } = yield take(constants.SIGN_UP_REQUEST);
-    yield call(signUpRequest, payload);
-  }
+export function* signUpSaga() {
+  yield takeEvery(constants.SIGN_UP_REQUEST, signUpRequest);
+}
+
+function* checkUserExists({ payload }) {
+  yield call(userApi.checkUserExists, payload);
+}
+
+export function* checkUserExistsSaga() {
+  yield takeEvery(constants.IS_USER_EXISTS, checkUserExists);
 }

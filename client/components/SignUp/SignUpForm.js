@@ -18,12 +18,12 @@ class SignUpForm extends React.PureComponent {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  checkUserExists = () => {
+  checkUserExists = (e) => {
     const field = e.target.name;
     const val = e.target.value;
 
-    if (!val) {
-      this.props.checkUserExists(field, val);
+    if (val) {
+      this.props.checkUserExists({ field, val });
     }
   }
 
