@@ -1,4 +1,4 @@
-import { take, call, put, takeEvery } from 'redux-saga/effects';
+import { take, call, put, takeEvery, select } from 'redux-saga/effects';
 
 import api from '../api/auth';
 import userApi from '../api/user';
@@ -25,7 +25,22 @@ export function* signUpSaga() {
 }
 
 function* checkUserExists({ payload }) {
-  yield call(userApi.checkUserExists, payload);
+  const auth = yield select(state => state.auth);
+  try {
+    yield call(userApi.checkUserExists, payload);
+
+    const newErrorObj = {...auth.get('errors')};
+    delete newErrorObj[payload.field];
+    yield put({
+      type: constants.SIGN_UP_ERROR,
+      payload: newErrorObj,
+    });
+  } catch (error) {
+    yield put({
+      type: constants.SIGN_UP_ERROR,
+      payload: { ...auth.get('errors'), [payload.field]: error.response.data[payload.field] },
+    });
+  }
 }
 
 export function* checkUserExistsSaga() {
