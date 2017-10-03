@@ -1,4 +1,9 @@
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+
 import { getUserByToken } from '../services/UserService';
+import config from '../config';
+
 import User from '../models/user';
 
 async function checkUserExists(req, res, next) {

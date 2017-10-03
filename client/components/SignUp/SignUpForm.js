@@ -30,7 +30,6 @@ class SignUpForm extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(isEmpty(nextProps.errors));
     this.setState({
       errors: nextProps.errors,
       isValid: !isEmpty(nextProps.errors),

@@ -1,16 +1,24 @@
 import { take, call, put, takeEvery, select } from 'redux-saga/effects';
+import jwtDecode from 'jwt-decode';
+import { browserHistory } from 'react-router';
 
 import api from '../api/auth';
 import userApi from '../api/user';
 import constants from '../constants/authConstants';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function* signUpRequest({ payload }) {
   try {
     const receivedData = yield call(api.signUp, payload);
 
+    const token = receivedData.data.token;
+    localStorage.setItem('jwtToken', token);
+    setAuthorizationToken(token);
+
+    browserHistory.push('/');
     yield put({
       type: constants.SET_SIGNED_UP_USER,
-      payload: receivedData,
+      payload: jwtDecode(token),
     });
   } catch (e) {
     yield put({
@@ -45,4 +53,17 @@ function* checkUserExists({ payload }) {
 
 export function* checkUserExistsSaga() {
   yield takeEvery(constants.IS_USER_EXISTS, checkUserExists);
+}
+
+function* signInRequest({ data }) {
+  try {
+    const user = yield call(api.signIn, data);
+    console.log(user.data);
+  } catch (e) {
+    console.log(e.response.data);
+  }
+}
+
+export function* signInRequestSaga() {
+  yield takeEvery(constants.SIGN_IN_REQUEST, signInRequest);
 }

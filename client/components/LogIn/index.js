@@ -1,5 +1,14 @@
 import { connect } from 'react-redux';
 
 import SignInPage from './SignInPage';
+import authActions from '../../actions/authActions';
 
-export default connect()(SignInPage);
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchToProps = dispatch => ({
+  signInRequest: data => dispatch(authActions.signInRequest(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);

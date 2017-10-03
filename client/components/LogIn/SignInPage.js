@@ -8,11 +8,17 @@ class SignInPage extends React.Component {
     return (
       <div className="row">
         <div className="form-wrapper">
-          <SignInForm />
+          <SignInForm
+            signInRequest={this.props.signInRequest}
+          />
         </div>
       </div>
     );
   }
+}
+
+SignInPage.propTypes = {
+  signInRequest: PropTypes.func.isRequired,
 }
 
 export default SignInPage;

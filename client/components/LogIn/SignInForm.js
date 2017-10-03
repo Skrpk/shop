@@ -5,13 +5,18 @@ import TextFieldGroup from '../common/TextFieldGroup';
 
 export default class SignInForm extends React.Component {
   state = {
-    username: '',
+    identifier: '',
     password: '',
     errors: {},
   }
 
   onChange = (e) => {
-    this.setState({ [e.taget.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.signInRequest(this.state);
   }
 
   render() {
@@ -19,20 +24,21 @@ export default class SignInForm extends React.Component {
 
     return (<div className="bd-example">
       <h1>YEEEEEE!</h1>
-      <form>
+      <form onSubmit={this.onSubmit}>
         <TextFieldGroup
           error={errors.username}
-          label="Username"
+          label="Username or email"
           onChange={this.onChange}
-          value={this.state.username}
-          field="username"
+          value={this.state.identifier}
+          field="identifier"
         />
         <TextFieldGroup
-          error={errors.username}
+          error={errors.password}
           label="Password"
           onChange={this.onChange}
           value={this.state.password}
           field="password"
+          type="password"
         />
         <button
           className="btn btn-primary btn-lg"
