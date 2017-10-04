@@ -2,20 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TextFieldGroup from '../common/TextFieldGroup';
+import validateInput from '../../../server/shared/validations/signIn';
 
 export default class SignInForm extends React.Component {
   state = {
     identifier: '',
     password: '',
+    errors: {},
   }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  isValid = () => {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.signInRequest(this.state);
+    if (this.isValid()) {
+      this.props.signInRequest(this.state);
+    }
   }
 
   render() {
@@ -31,14 +45,14 @@ export default class SignInForm extends React.Component {
       }
       <form onSubmit={this.onSubmit}>
         <TextFieldGroup
-          error={errors.username}
+          error={this.state.errors.identifier}
           label="Username or email"
           onChange={this.onChange}
           value={this.state.identifier}
           field="identifier"
         />
         <TextFieldGroup
-          error={errors.password}
+          error={this.state.errors.password}
           label="Password"
           onChange={this.onChange}
           value={this.state.password}
