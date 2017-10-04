@@ -6,11 +6,13 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
+import jwt from 'jsonwebtoken';
 
 import config from './config';
 import webpackConfig from '../webpack.config.dev.js';
 import authRoute from './routes/auth';
 import userRoute from './routes/user';
+import User from './models/user';
 
 const app = express();
 
@@ -34,6 +36,16 @@ app.use(webpackMiddleware(compiler, {
 }));
 
 app.use(webpackHotMiddleware(compiler));
+
+app.get('/confirmation/:token', async (req, res) => {
+  try {
+    const { user: { email } } = jwt.verify(req.params.token, config.EMAIL_SECRET);
+    await User.findOneAndUpdate({ email }, { confirmed: true });
+    return res.redirect('/signin');
+  } catch (e) {
+    res.send('ERROR');
+  }
+});
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, './index.html'));

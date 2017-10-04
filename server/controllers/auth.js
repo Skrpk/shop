@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import pick from 'lodash/pick';
 
 import User from '../models/user';
 import config from '../config';
 import ValidateSignUpInput from '../shared/validations/signUp';
+import transporter from '../services/transporter';
 
 const signUp = async (req, res, next) => {
   const credentials = req.body;
@@ -19,13 +21,28 @@ const signUp = async (req, res, next) => {
       credentials.password = passwordDigest;
       user = await User.create(credentials);
 
-      const token = jwt.sign({
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      }, config.secret);
+      jwt.sign(
+        {
+          user: pick(user, 'email'),
+        },
+        config.EMAIL_SECRET,
+        {
+          expiresIn: '1d',
+        },
+        (err, emailToken) => {
+          if (err) {
+            throw err;
+          }
 
-      res.json({ token });
+          const url = `http://localhost:${config.port}/confirmation/${emailToken}`;
+
+          transporter.sendMail({
+            to: user.email,
+            subject: 'Confirm Email',
+            html: `Please click this link to confirm your email: <a href=${url}>${url}</a>`,
+          });
+        }
+      );
     } catch ({ message }) {
       console.log(message);
       return next({
@@ -33,8 +50,6 @@ const signUp = async (req, res, next) => {
         message,
       });
     }
-
-    res.json(user);
   }
 };
 
