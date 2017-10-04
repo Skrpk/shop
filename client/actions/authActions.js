@@ -15,8 +15,14 @@ const signInRequest = data => ({
   data,
 });
 
+const clearErrorList = () => ({
+  type: constants.AUTH_ERROR,
+  payload: {},
+});
+
 export default {
   signUpRequest,
   isUserExists,
   signInRequest,
+  clearErrorList,
 };

@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   signInRequest: data => dispatch(authActions.signInRequest(data)),
+  clearErrorList: () => dispatch(authActions.clearErrorList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);
