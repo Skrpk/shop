@@ -52,7 +52,6 @@ async function signIn(req, res, next) {
     res.status(500).json({ error: 'Server error' });
   }
 
-  console.log(user);
   if (user) {
     try {
       const result = await user.comparePasswords(password);
@@ -65,10 +64,10 @@ async function signIn(req, res, next) {
       res.json({ token });
       next();
     } catch (e) {
-      res.status(404).json({ error: 'Invalid credentials' });
+      res.status(404).json({ signin: 'Invalid credentials' });
     }
   } else {
-    res.status(404).json({ error: 'Invalid credentials' });
+    res.status(404).json({ signin: 'Invalid credentials' });
   }
 }
 

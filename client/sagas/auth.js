@@ -22,7 +22,7 @@ function* signUpRequest({ payload }) {
     });
   } catch (e) {
     yield put({
-      type: constants.SIGN_UP_ERROR,
+      type: constants.AUTH_ERROR,
       payload: e.response.data,
     });
   }
@@ -40,12 +40,12 @@ function* checkUserExists({ payload }) {
     const newErrorObj = {...auth.get('errors')};
     delete newErrorObj[payload.field];
     yield put({
-      type: constants.SIGN_UP_ERROR,
+      type: constants.AUTH_ERROR,
       payload: newErrorObj,
     });
   } catch (error) {
     yield put({
-      type: constants.SIGN_UP_ERROR,
+      type: constants.AUTH_ERROR,
       payload: { ...auth.get('errors'), [payload.field]: error.response.data[payload.field] },
     });
   }
@@ -58,9 +58,19 @@ export function* checkUserExistsSaga() {
 function* signInRequest({ data }) {
   try {
     const user = yield call(api.signIn, data);
-    console.log(user.data);
+    const { token } = user.data;
+
+    localStorage.setItem('jwtToken', token);
+    setAuthorizationToken(token);
+    yield put({
+      type: constants.SET_SIGNED_UP_USER,
+      payload: jwtDecode(token),
+    });
   } catch (e) {
-    console.log(e.response.data);
+    yield put({
+      type: constants.AUTH_ERROR,
+      payload: e.response.data,
+    });
   }
 }
 
