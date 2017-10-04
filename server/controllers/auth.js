@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt-as-promised';
+import bcrypt from 'bcrypt';
 
 import User from '../models/user';
 import config from '../config';
@@ -27,6 +27,7 @@ const signUp = async (req, res, next) => {
 
       res.json({ token });
     } catch ({ message }) {
+      console.log(message);
       return next({
         status: 400,
         message,
@@ -53,6 +54,9 @@ async function signIn(req, res, next) {
   }
 
   if (user) {
+    if (!user.confirmed) {
+      return res.status(404).json({ signin: 'Please confirm your email to login' });
+    }
     try {
       const result = await user.comparePasswords(password);
       const token = jwt.sign({
