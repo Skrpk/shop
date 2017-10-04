@@ -43,6 +43,8 @@ const signUp = async (req, res, next) => {
           });
         }
       );
+
+      res.json({ success: true });
     } catch ({ message }) {
       console.log(message);
       return next({

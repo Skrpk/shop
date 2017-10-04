@@ -1,5 +1,5 @@
 const config = {
-  port: 3000,
+  port: 8000,
   db: 'mongodb://127.0.0.1/shop',
   secret: 'mysercretkey',
   emailService: 'Gmail',
