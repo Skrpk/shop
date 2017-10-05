@@ -9,7 +9,7 @@ import bluebird from 'bluebird';
 import jwt from 'jsonwebtoken';
 
 import config from './config';
-import webpackConfig from '../webpack.config.dev.js';
+import webpackConfig from '../webpack.config.babel.js';
 import authRoute from './routes/auth';
 import userRoute from './routes/user';
 import User from './models/user';
@@ -43,7 +43,7 @@ app.get('/confirmation/:token', async (req, res) => {
     await User.findOneAndUpdate({ email }, { confirmed: true });
     return res.redirect('/signin');
   } catch (e) {
-    res.send('ERROR');
+    return res.send('ERROR');
   }
 });
 
