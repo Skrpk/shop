@@ -10,6 +10,13 @@ const isUserExists = data => ({
   payload: data,
 });
 
+const signInRequest = data => ({
+  type: constants.SIGN_IN_REQUEST,
+  data,
+});
+
 export default {
   signUpRequest,
+  isUserExists,
+  signInRequest,
 };

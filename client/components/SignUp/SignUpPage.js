@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import SignUpForm from './SignUpForm';
@@ -14,7 +13,7 @@ class SignUpPage extends React.PureComponent {
     } = this.props;
 
     return (<div className="row">
-      <div className={'form-wrapper'}>
+      <div className="form-wrapper">
         <SignUpForm
           checkUserExists={isUserExists}
           userSignUpRequest={userSignUpRequest}

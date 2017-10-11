@@ -4,7 +4,7 @@ const getUserByToken = async function({ _id }) {
   let user;
 
   try {
-    user = await User.findOne({ _id }, { password: 0 });
+    user = await User.find({ _id }, { password: 0 });
   } catch (e) {
     throw e;
   }

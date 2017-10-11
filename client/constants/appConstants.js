@@ -1,0 +1,5 @@
+const CHANGE_CURRENT_SCREEN = 'CHANGE_CURRENT_SCREEN';
+
+export default {
+  CHANGE_CURRENT_SCREEN,
+};

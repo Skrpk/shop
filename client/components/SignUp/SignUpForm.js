@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import validateInput from '../../../server/shared/validations/signUp';
 import TextFieldGroup from '../common/TextFieldGroup';
@@ -12,23 +13,27 @@ class SignUpForm extends React.PureComponent {
     passwordConfirmation: '',
     errors: {},
     isLoading: false,
+    isValid: !isEmpty(this.props.errors),
   }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  checkUserExists = () => {
+  checkUserExists = (e) => {
     const field = e.target.name;
     const val = e.target.value;
 
-    if (!val) {
-      this.props.checkUserExists(field, val);
+    if (val) {
+      this.props.checkUserExists({ field, val });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ errors: nextProps.errors });
+    this.setState({
+      errors: nextProps.errors,
+      isValid: !isEmpty(nextProps.errors),
+    });
   }
 
   isValid = () => {
@@ -91,7 +96,7 @@ class SignUpForm extends React.PureComponent {
           <div className="form-group">
             <button
               onClick={this.onSubmit}
-              disabled={this.state.isLoading}
+              disabled={this.state.isLoading || this.state.isValid}
               className="btn btn-primary btn-lg"
             >
               Sign up
