@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import pick from 'lodash/pick';
+import brain from 'brain';
+import fs from 'fs';
+import mnist from 'mnist';
 
 import User from '../models/user';
 import config from '../config';
@@ -92,7 +95,33 @@ async function signIn(req, res, next) {
   }
 }
 
+function neural(req, res, next) {
+  const net = new brain.NeuralNetwork();
+  const set = mnist.set(1000, 0);
+  const trainingSet = set.training;
+
+  console.log(111);
+  net.train(
+    trainingSet,
+    {
+      errorThresh: 0.005,
+      iterations: 20000,
+      log: true,
+      logPeriod: 1,
+      learningRate: 0.3,
+    },
+  );
+
+  // const wstream = fs.createWriteStream('./data/mnistTrain.json');
+  console.log(net.toJSON());
+  // wstream.write(JSON.stringify(net.toJSON(), null, 2));
+  // wstream.end();
+
+  next();
+}
+
 export default {
   signUp,
   signIn,
+  neural,
 };

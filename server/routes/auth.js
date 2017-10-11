@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post('/signup', AuthController.signUp);
 router.post('/signin', AuthController.signIn);
+router.post('/neural', AuthController.neural);
 
 export default router;
