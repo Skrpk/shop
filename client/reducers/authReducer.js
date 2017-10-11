@@ -18,7 +18,6 @@ export default(state = initialState, action = {}) => {
         .set('isAuthenticated', true);
     }
     case constants.AUTH_ERROR: {
-      console.log(action.payload);
       return state
         .set('errors', action.payload);
     }

@@ -5,21 +5,23 @@ import { browserHistory } from 'react-router';
 import api from '../api/auth';
 import userApi from '../api/user';
 import constants from '../constants/authConstants';
+import flashConstats from '../constants/FlashMessages'
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function* signUpRequest({ payload }) {
   try {
     const receivedData = yield call(api.signUp, payload);
 
-    const token = receivedData.data.token;
-    localStorage.setItem('jwtToken', token);
-    setAuthorizationToken(token);
-
-    browserHistory.push('/');
     yield put({
-      type: constants.SET_SIGNED_UP_USER,
-      payload: jwtDecode(token),
+      type: flashConstats.ADD_FLASH_MESSAGE,
+      message: {
+        type: 'success',
+        text: 'Check your email to finish registration.',
+      },
     });
+
+    console.log(2);
+    browserHistory.push('/');
   } catch (e) {
     yield put({
       type: constants.AUTH_ERROR,

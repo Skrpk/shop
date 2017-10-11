@@ -9,7 +9,7 @@ export default {
   ],
   output: {
     path: '/',
-    filename: 'bundle.js',
+    filename: 'bundle1.js',
     publicPath: '/'
   },
   plugins: [

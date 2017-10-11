@@ -1,9 +1,14 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt-as-promised';
+import bcrypt from 'bcrypt';
+import pick from 'lodash/pick';
+import brain from 'brain';
+import fs from 'fs';
+import mnist from 'mnist';
 
 import User from '../models/user';
 import config from '../config';
 import ValidateSignUpInput from '../shared/validations/signUp';
+import transporter from '../services/transporter';
 
 const signUp = async (req, res, next) => {
   const credentials = req.body;
@@ -19,21 +24,37 @@ const signUp = async (req, res, next) => {
       credentials.password = passwordDigest;
       user = await User.create(credentials);
 
-      const token = jwt.sign({
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      }, config.secret);
+      jwt.sign(
+        {
+          user: pick(user, 'email'),
+        },
+        config.EMAIL_SECRET,
+        {
+          expiresIn: '1d',
+        },
+        (err, emailToken) => {
+          if (err) {
+            throw err;
+          }
 
-      res.json({ token });
+          const url = `http://localhost:${config.port}/confirmation/${emailToken}`;
+
+          transporter.sendMail({
+            to: user.email,
+            subject: 'Confirm Email',
+            html: `Please click this link to confirm your email: <a href=${url}>${url}</a>`,
+          });
+        }
+      );
+
+      res.json({ success: true });
     } catch ({ message }) {
+      console.log(message);
       return next({
         status: 400,
         message,
       });
     }
-
-    res.json(user);
   }
 };
 
@@ -53,6 +74,9 @@ async function signIn(req, res, next) {
   }
 
   if (user) {
+    if (!user.confirmed) {
+      return res.status(404).json({ signin: 'Please confirm your email to login' });
+    }
     try {
       const result = await user.comparePasswords(password);
       const token = jwt.sign({
@@ -71,7 +95,33 @@ async function signIn(req, res, next) {
   }
 }
 
+function neural(req, res, next) {
+  const net = new brain.NeuralNetwork();
+  const set = mnist.set(1000, 0);
+  const trainingSet = set.training;
+
+  console.log(111);
+  net.train(
+    trainingSet,
+    {
+      errorThresh: 0.005,
+      iterations: 20000,
+      log: true,
+      logPeriod: 1,
+      learningRate: 0.3,
+    },
+  );
+
+  // const wstream = fs.createWriteStream('./data/mnistTrain.json');
+  console.log(net.toJSON());
+  // wstream.write(JSON.stringify(net.toJSON(), null, 2));
+  // wstream.end();
+
+  next();
+}
+
 export default {
   signUp,
   signIn,
+  neural,
 };

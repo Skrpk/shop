@@ -2,12 +2,12 @@ import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from './reducers';
-import routes from './routes';
+import App from './components/App';
 import sagas from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -22,6 +22,8 @@ sagaMiddleware.run(sagas);
 
 render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('app'));
