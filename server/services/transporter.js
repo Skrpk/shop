@@ -6,6 +6,6 @@ export default nodemailer.createTransport({
   service: config.emailService,
   auth: {
     user: 'vitaliy.skripka23@gmail.com',
-    pass: 'avecezar1996',
+    pass: 'password',
   }
 });
